@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kratos"
+version = "0.1.0"
+description = "Auditable agentic workflow for TMDD calibration, nlmixr2 population estimation, diagnostics and reporting"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "pandas>=2.0",
+  "matplotlib>=3.8",
+  "PyYAML>=6.0",
+  "jsonschema>=4.0",
+]
+
+[project.optional-dependencies]
+ui = ["streamlit>=1.30"]
+llm = ["anthropic"]
+report = ["jupyter", "ipykernel", "nbformat", "nbclient"]
+test = ["pytest>=7"]
+
+[project.scripts]
+kratos = "kratos.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "r: requires R with rxode2/nlmixr2 (skipped when unavailable)",
+  "slow: long-running (population estimation)",
+]
